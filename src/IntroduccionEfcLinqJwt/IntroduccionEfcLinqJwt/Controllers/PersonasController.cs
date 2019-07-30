@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using IntroduccionEfcLinqJwt.Models;
+using IntroduccionEfcLinqJwt.Dtos;
 
 namespace IntroduccionEfcLinqJwt.Controllers
 {
@@ -22,9 +21,26 @@ namespace IntroduccionEfcLinqJwt.Controllers
 
         // GET: api/Personas
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Persona>>> GetPersona()
+        public async Task<ActionResult<IEnumerable<PersonasDto>>> GetPersonas()
         {
-            return await _context.Persona.ToListAsync();
+            // Forma síncronica.
+            List<Rol> roles = await _context.Rol.ToListAsync();
+            List <Persona> personas = await _context.Persona.ToListAsync();
+
+            // Con LinQ.
+            List<PersonasDto> personasDto = (from persona in personas
+                      join rol in roles on persona.Rol
+                      equals rol.Id
+                      select new PersonasDto
+                      {
+                          Id = persona.Id,
+                          Nombres = persona.Nombres,
+                          Email = persona.Email,
+                          Telefono = persona.Telefono,
+                          Rol = rol.Descripcion
+                      }).ToList();
+
+            return personasDto;
         }
 
         // GET: api/Personas/5
