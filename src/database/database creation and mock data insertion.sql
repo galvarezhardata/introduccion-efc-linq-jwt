@@ -1,10 +1,10 @@
 use master
 go
 
-create database [EntityFrameworkCoreIntro]
+create database [EfcLinqJwtIntro]
 go
 
-use [EntityFrameworkCoreIntro]
+use [EfcLinqJwtIntro]
 go
 
 create table turno (
