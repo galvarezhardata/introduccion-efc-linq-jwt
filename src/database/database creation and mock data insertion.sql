@@ -1,6 +1,9 @@
 use master
 go
 
+--drop database [EfcLinqJwtIntro]
+--go
+
 create database [EfcLinqJwtIntro]
 go
 
@@ -21,6 +24,8 @@ create table rol (
 
 create table persona (
 	[id] int identity,
+	[username] nvarchar(50),
+	[password] nvarchar(50),
 	[nombres] nvarchar(50),
 	[email] nvarchar(50),
 	[telefono] nvarchar(50),
@@ -69,16 +74,16 @@ go
 
 ---------------------------------------------------------------------------
 
-insert into [persona] ([nombres],[email],[telefono],[rol]) values ('german alvarez','g.alvarez@','1168645457',1)
+insert into [persona] ([nombres],[email],[telefono],[rol], [username], [password]) values ('german alvarez','g.alvarez@','1168645457',1, 'german', 'german')
 go
 
-insert into [persona] ([nombres],[email],[telefono],[rol]) values ('martin da veiga','m.daveiga@','1160847475',2)
+insert into [persona] ([nombres],[email],[telefono],[rol], [username], [password]) values ('martin da veiga','m.daveiga@','1160847475',2, 'martin', 'martin')
 go
 
-insert into [persona] ([nombres],[email],[telefono],[rol]) values ('gustavo pesci','g.pesci@','1131755164',1)
+insert into [persona] ([nombres],[email],[telefono],[rol], [username], [password]) values ('gustavo pesci','g.pesci@','1131755164',1, 'gustavo', 'gustavo')
 go
 
-insert into [persona] ([nombres],[email],[telefono],[rol]) values ('pablo teruel','p.teruel@','1166195539',2)
+insert into [persona] ([nombres],[email],[telefono],[rol], [username], [password]) values ('pablo teruel','p.teruel@','1166195539',2, 'pablo', 'pablo')
 go
 
 insert into [persona] ([nombres],[email],[telefono],[rol]) values ('gustavo fayard','g.fayard@','1145096091',1)
