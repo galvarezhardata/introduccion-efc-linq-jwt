@@ -74,25 +74,24 @@ namespace IntroduccionEfcLinqJwt.Controllers
 
         private string GetUserApplicationKey(string username)
         {
-            var user = _context.User.Where(u => u.Username == username).FirstOrDefault();
+            //var user = _context.User.Where(u => u.Username == username).FirstOrDefault();
 
-            return user.Applicationkey;
+            return "Hola mundo!";
         }
 
         public string GetUserRoleDescription(string username)
         {
-            var user = _context.Persona.Where(u => u.Username == username).FirstOrDefault();
+            Persona persona = _context.Persona.Where(p => p.Username == username).FirstOrDefault();
+            Rol rol = _context.Rol.Where(r => r.Id == persona.Id).FirstOrDefault();
 
-            user.Userrole = _context.Userrole.Where(ut => ut.IdUserrole == user.Userroleid).FirstOrDefault();
-
-            return user.Userrole.Roledescription;
+            return rol.Descripcion;
         }
 
         private bool IsAValidUser(string username, string password)
         {
             bool IsAValidUser = false;
 
-            var user = _context.User.Where(u => u.Username == username && u.Password == password).FirstOrDefault();
+            var user = _context.Persona.Where(u => u.Username == username && u.Password == password).FirstOrDefault();
 
             if (user != null)
             {
@@ -123,7 +122,7 @@ namespace IntroduccionEfcLinqJwt.Controllers
                 {
                     new Claim("Name", credentials["user"]),
                     new Claim("Role", credentials["role"]),
-                    new Claim("AppId", credentials["appid"])
+                    //new Claim("AppId", credentials["appid"])
                 })
             };
 

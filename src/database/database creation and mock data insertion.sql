@@ -74,16 +74,16 @@ go
 
 ---------------------------------------------------------------------------
 
-insert into [persona] ([nombres],[email],[telefono],[rol], [username], [password]) values ('german alvarez','g.alvarez@','1168645457',1, 'german', 'german')
+insert into [persona] ([username],[password],[nombres],[email],[telefono],[rol]) values ('german', 'german', 'german alvarez','g.alvarez@','1168645457',1)
 go
 
-insert into [persona] ([nombres],[email],[telefono],[rol], [username], [password]) values ('martin da veiga','m.daveiga@','1160847475',2, 'martin', 'martin')
+insert into [persona] ([username],[password],[nombres],[email],[telefono],[rol]) values ('martin', 'martin', 'martin da veiga','m.daveiga@','1160847475',2)
 go
 
-insert into [persona] ([nombres],[email],[telefono],[rol], [username], [password]) values ('gustavo pesci','g.pesci@','1131755164',1, 'gustavo', 'gustavo')
+insert into [persona] ([username],[password],[nombres],[email],[telefono],[rol]) values ('gustavo', 'gustavo', 'gustavo pesci','g.pesci@','1131755164',1)
 go
 
-insert into [persona] ([nombres],[email],[telefono],[rol], [username], [password]) values ('pablo teruel','p.teruel@','1166195539',2, 'pablo', 'pablo')
+insert into [persona] ([username],[password],[nombres],[email],[telefono],[rol]) values ('pablo', 'pablo', 'pablo teruel','p.teruel@','1166195539',2)
 go
 
 insert into [persona] ([nombres],[email],[telefono],[rol]) values ('gustavo fayard','g.fayard@','1145096091',1)

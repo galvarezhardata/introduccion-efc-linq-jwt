@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using IntroduccionEfcLinqJwt.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace IntroduccionEfcLinqJwt.Controllers
 {
+    [Authorize(Policy = "Estudiante")]
     [Route("api/[controller]")]
     [ApiController]
     public class CursosController : ControllerBase

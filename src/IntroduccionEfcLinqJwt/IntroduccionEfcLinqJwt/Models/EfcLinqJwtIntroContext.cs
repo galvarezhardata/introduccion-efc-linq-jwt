@@ -85,6 +85,14 @@ namespace IntroduccionEfcLinqJwt.Models
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
+                entity.Property(e => e.Username)
+                    .HasColumnName("username")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Password)
+                    .HasColumnName("password")
+                    .HasMaxLength(50);
+
                 entity.Property(e => e.Email)
                     .HasColumnName("email")
                     .HasMaxLength(50);

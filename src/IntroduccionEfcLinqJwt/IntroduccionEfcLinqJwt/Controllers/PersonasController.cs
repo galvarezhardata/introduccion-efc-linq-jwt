@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using IntroduccionEfcLinqJwt.Models;
 using IntroduccionEfcLinqJwt.Dtos;
+using Microsoft.AspNetCore.Authorization;
 
 namespace IntroduccionEfcLinqJwt.Controllers
 {
+    [Authorize(Policy = "Profesor")]
     [Route("api/[controller]")]
     [ApiController]
     public class PersonasController : ControllerBase
