@@ -1,4 +1,6 @@
-﻿using IntroduccionEfcLinqJwt.Models;
+﻿using IntroduccionEfcLinqJwt.Helpers;
+using IntroduccionEfcLinqJwt.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -6,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace IntroduccionEfcLinqJwt
 {
@@ -36,6 +40,30 @@ namespace IntroduccionEfcLinqJwt
             // 3) Ejecutar en la línea de comandos de desarrollo (Tools / NuGet Package Manager / Package Manager Console):
             // Server=.;Database=EfcLinqJwtIntro;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
             services.AddDbContext<EfcLinqJwtIntroContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MyConnectionString")));
+
+            // Levantamos la configuración del servicio de autenticación del archivo de configuración.
+            var authSettingsSection = Configuration.GetSection("AuthSettings");
+            services.Configure<AuthSettings>(authSettingsSection);
+
+            // Configuramos el token.
+            var authSettings = authSettingsSection.Get<AuthSettings>();
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authSettings.Secret));
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateAudience = false,
+                    ValidateIssuer = false,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = key
+                };
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Profesor", policy => policy.RequireClaim("Role", "Profesor"));
+                options.AddPolicy("Estudiante", policy => policy.RequireClaim("Role", "Profesor", "Estudiante"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +74,8 @@ namespace IntroduccionEfcLinqJwt
                 app.UseDeveloperExceptionPage();
             }
 
+            // Super importante!: si se cambia el orden de las siguientes dos líneas el servicio de autenticación va a hacer agua.
+            app.UseAuthentication();
             app.UseMvc();
 
             app.Run(async (context) =>
